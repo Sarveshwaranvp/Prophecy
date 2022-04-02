@@ -45,9 +45,11 @@ def home():
 def predict():
     int_features = [str(x) for x in request.form.values()]
     final_features = [np.array(int_features)]
-    prediction = model.predict(final_features)
+    final_features = np.array(final_features)
+    final_features = final_features[0, 0:-1]
+    prediction = model.predict([final_features])
     output = round(prediction[0], 2)
-    if output == 1.0:
+    if output == 0.0:
         finout = "Depressed"
     else:
         finout = "Healthy"
